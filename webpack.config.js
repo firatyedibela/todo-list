@@ -27,8 +27,18 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      filename: "main.html",
+      template: "./src/template.html",
+      filename: "index.html",
     }),
   ],
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist')
+    },
+    open: true,
+    hot: true,
+    watchFiles: {
+      paths: ['./src/*.html'],
+    },
+  },
 }
