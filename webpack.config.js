@@ -38,7 +38,7 @@ module.exports = {
     open: true,
     hot: true,
     watchFiles: {
-      paths: ['./src/*.html'],
+      paths: ['./src/*.html', './src/images*.svg'],
     },
   },
 }
