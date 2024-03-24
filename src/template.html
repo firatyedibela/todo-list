@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">
+      <img class="page-logo" src="<%=require('./images/list.svg')%>" alt="">
+      <p class="app-name">Todo List</p>
+    </div>
+    <button class="new-task-btn">
+      <img class="add-task-logo" src="<%=require('./images/plus.svg')%>" alt="">
+      <p class="new">New task</p>
+    </button>
+    <div class="date">1 January 2023</div>
+  </header>
+  <main class="main">
+    <nav class="main-nav">
+      <div class="default-projects-section">
+        <button class="all-tasks default-project-btn">All tasks</button>
+        <button class="daily-tasks default-project-btn">Today</button>
+        <button class="weekly-tasks default-project-btn">This week</button>
+      </div>
+      <div class="custom-projects-section">
+        <p class="projects-header">Projects</p>
+        <button class="project">Project1</button>
+        <button class="project">Project2</button>
+      </div>
+    </nav>
+    <div class="content">There will be a lot of tasks</div>
+  </main>
+  <footer class="footer">
+    <a class="creator" href="https://github.com/firatyedibela" target="_blank" > 
+      <img class="github-logo" src="<%=require('./images/github.svg')%>" alt="">
+      @firatyedibela
+    </a>
+  </footer>
+</body>
+</html>
