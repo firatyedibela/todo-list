@@ -3,7 +3,7 @@ export default class Todo {
   static projects = [];
 
   static addTodo(title, description, dueDate, priority, project) {
-    Todo.list.push({title, description, dueDate, priority});
+    Todo.list.push({title, description, dueDate, priority, project});
   }
 
   static removeTodo(title) {
