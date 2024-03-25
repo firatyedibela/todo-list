@@ -85,7 +85,7 @@ export default class View {
     const container = document.createElement('div');
     container.classList.add('project-form-container');
     container.innerHTML = `
-      <input type="text" class="project-input" placeholder="Project Name">
+      <input type="text" class="project-name-input" placeholder="Project Name">
       <div class="project-form-btn-container">
         <button class="add-project-btn">Add</button>
         <button class="cancel-project-btn">Cancel</button>
