@@ -1,4 +1,4 @@
-import { submitTask } from '../index.js';
+import { submitTask, handleAddProject } from '../index.js';
 
 export default class View {
   static renderTaskForm(projects) {
@@ -19,7 +19,7 @@ export default class View {
         </div>
         <div>
           <label for="dueDate">Due Date</label>
-          <input class="task-input" type="text" name="dueDate" id="dueDate">
+          <input class="task-input" type="date" name="dueDate" id="dueDate">
         </div>
         <div>
           <label for="priority">Priority</label>
@@ -76,5 +76,35 @@ export default class View {
     if (formContainer) {
       document.body.removeChild(formContainer);
     }   
+  }
+
+  static renderProjectForm() {
+    // Remove existing project form
+    View.removeProjectForm();
+
+    const container = document.createElement('div');
+    container.classList.add('project-form-container');
+    container.innerHTML = `
+      <input type="text" class="project-input" placeholder="Project Name">
+      <div class="project-form-btn-container">
+        <button class="add-project-btn">Add</button>
+        <button class="cancel-project-btn">Cancel</button>
+      </div>
+    `;
+
+    container.querySelector('.add-project-btn').addEventListener('click', handleAddProject);
+    container.querySelector('.cancel-project-btn').addEventListener('click', () => {
+      View.removeProjectForm();
+    });
+
+    document.querySelector('.main-nav').appendChild(container);
+
+  }
+
+  static removeProjectForm() {
+    const projectContainer = document.querySelector('.project-form-container');
+    if (projectContainer) {
+      document.querySelector('.main-nav').removeChild(projectContainer);
+    }
   }
 }
