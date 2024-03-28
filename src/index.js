@@ -1,8 +1,10 @@
-import "./styles/main.css";
+import './styles/main.css';
 import Todo from './scripts/model.js';
 import View from './scripts/view.js';
+import { format } from 'date-fns';
 
-// Whenever I change the data, I will render the todoList
+const date = format(new Date(), 'yyyy-MM-dd');
+console.log(date);
 
 document.querySelector('.new-task-btn').addEventListener('click', () => {
   View.renderTaskForm(Todo.projects);
@@ -16,7 +18,7 @@ export function submitTask(e) {
   // Get data from task form
   const data = [];
   const inputs = document.querySelectorAll('.task-input');
-  inputs.forEach(input => {
+  inputs.forEach((input) => {
     data.push(input.value);
   });
   // Pass that data to addTodo function of Todo,
@@ -37,6 +39,3 @@ export function handleRemoveProject(e) {
   Todo.removeProject(projectName);
   View.renderProjects(Todo.projects);
 }
-
-
-
