@@ -7,7 +7,7 @@ export default class View {
     View.removeTaskForm();
 
     const formContainer = document.createElement('div');
-    formContainer.classList.add('form-container');  
+    formContainer.classList.add('form-container');
     formContainer.innerHTML = `
       <form class="task-form" action="">
         <div>
@@ -41,33 +41,33 @@ export default class View {
         <button class="cancel-task-button">Cancel</button>
       </form>
     `;
-    
-    // Add event listeners to form buttons
-    formContainer.querySelector('.submit-new-task-btn')
-      .addEventListener('click', (e) => {
-        submitTask()
-        View.removeTaskForm();
-      }
-    );
 
-    formContainer.querySelector('.cancel-task-button')
+    // Add event listeners to form buttons
+    formContainer
+      .querySelector('.submit-new-task-btn')
+      .addEventListener('click', (e) => {
+        submitTask();
+        View.removeTaskForm();
+      });
+
+    formContainer
+      .querySelector('.cancel-task-button')
       .addEventListener('click', (e) => {
         e.preventDefault();
         View.removeTaskForm();
-      }
-    );
+      });
 
     // Render project options if there is any
-    if(projects) {
+    if (projects) {
       const projectOptions = formContainer.querySelector('#task-project');
-      projects.forEach(project => {
+      projects.forEach((project) => {
         const optionHTML = `
           <option value="${project.name}">${project.name}</option>
-        `; 
+        `;
         projectOptions.innerHTML += optionHTML;
       });
-    } 
-    
+    }
+
     document.body.appendChild(formContainer);
   }
 
@@ -75,7 +75,7 @@ export default class View {
     const formContainer = document.querySelector('.form-container');
     if (formContainer) {
       document.body.removeChild(formContainer);
-    }   
+    }
   }
 
   static renderProjectForm() {
@@ -94,13 +94,16 @@ export default class View {
       </form>
     `;
 
-    container.querySelector('.add-project-btn').addEventListener('click', handleAddProject);
-    container.querySelector('.cancel-project-btn').addEventListener('click', () => {
-      View.removeProjectForm();
-    });
+    container
+      .querySelector('.add-project-btn')
+      .addEventListener('click', handleAddProject);
+    container
+      .querySelector('.cancel-project-btn')
+      .addEventListener('click', () => {
+        View.removeProjectForm();
+      });
 
     document.querySelector('.main-nav').appendChild(container);
-
   }
 
   static removeProjectForm() {
@@ -114,7 +117,7 @@ export default class View {
     const container = document.querySelector('.custom-projects-section');
     // Clear the container first to avoid duplication
     container.innerHTML = '';
-    projects.forEach(project => {
+    projects.forEach((project) => {
       const projectNode = document.createElement('div');
       projectNode.classList.add('custom-project');
       projectNode.innerHTML = `
@@ -127,7 +130,48 @@ export default class View {
       `;
       container.appendChild(projectNode);
 
-      document.querySelector('.remove-project-btn').addEventListener('click', handleRemoveProject);
+      document
+        .querySelector('.remove-project-btn')
+        .addEventListener('click', handleRemoveProject);
+    });
+  }
+
+  static renderTasks(taskList) {
+    const container = document.querySelector('.content');
+    container.textContent = '';
+    taskList.forEach((task) => {
+      // Create container for tasks
+      const taskContainer = document.createElement('div');
+      taskContainer.classList.add('task-container');
+
+      // Create task elements for task properties
+      const title = document.createElement('div');
+      title.classList.add('task-title');
+      title.textContent = task.title;
+
+      const description = document.createElement('div');
+      description.classList.add('task-description');
+      description.textContent = task.description;
+
+      const dueDate = document.createElement('div');
+      dueDate.classList.add('task-due-date');
+      dueDate.textContent = task.dueDate;
+
+      const priority = document.createElement('div');
+      priority.classList.add('task-priority');
+      priority.textContent = task.priority;
+
+      const project = document.createElement('div');
+      project.classList.add('task-project');
+      project.textContent = task.project;
+
+      taskContainer.appendChild(title);
+      taskContainer.appendChild(description);
+      taskContainer.appendChild(dueDate);
+      taskContainer.appendChild(priority);
+      taskContainer.appendChild(project);
+
+      container.appendChild(taskContainer);
     });
   }
 }

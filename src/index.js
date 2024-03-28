@@ -4,12 +4,28 @@ import View from './scripts/view.js';
 import { format } from 'date-fns';
 
 const date = format(new Date(), 'yyyy-MM-dd');
-console.log(date);
 
+// Display all tasks
+document.querySelector('.all-tasks').addEventListener('click', () => {
+  View.renderTasks(Todo.list);
+});
+
+// Display today's tasks
+document.querySelector('.todays-tasks').addEventListener('click', () => {
+  View.renderTasks(Todo.getTodaysTasks());
+});
+
+// Display this week's tasks
+document.querySelector('.weeks-tasks').addEventListener('click', () => {
+  View.renderTasks(Todo.getWeeksTasks());
+});
+
+// Create new task
 document.querySelector('.new-task-btn').addEventListener('click', () => {
   View.renderTaskForm(Todo.projects);
 });
 
+// Create new project
 document.querySelector('.new-project-btn').addEventListener('click', () => {
   View.renderProjectForm();
 });
