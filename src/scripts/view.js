@@ -1,4 +1,5 @@
-import { submitTask, handleAddProject } from '../index.js';
+import { submitTask, handleAddProject, handleRemoveProject } from '../index.js';
+import x from '../images/x.svg';
 
 export default class View {
   static renderTaskForm(projects) {
@@ -11,15 +12,15 @@ export default class View {
       <form class="task-form" action="">
         <div>
           <label for="title">Title</label>
-          <input class="task-input" type="text" name="title" id="title">
+          <input class="task-input" type="text" name="title" id="title" required>
         </div>
         <div>
           <label for="description">Description</label>
-          <input class="task-input" type="text" name="description" id="description">
+          <input class="task-input" type="text" name="description" id="description" required>
         </div>
         <div>
           <label for="dueDate">Due Date</label>
-          <input class="task-input" type="date" name="dueDate" id="dueDate">
+          <input class="task-input" type="date" name="dueDate" id="dueDate" required>
         </div>
         <div>
           <label for="priority">Priority</label>
@@ -44,7 +45,6 @@ export default class View {
     // Add event listeners to form buttons
     formContainer.querySelector('.submit-new-task-btn')
       .addEventListener('click', (e) => {
-        e.preventDefault();
         submitTask()
         View.removeTaskForm();
       }
@@ -85,11 +85,13 @@ export default class View {
     const container = document.createElement('div');
     container.classList.add('project-form-container');
     container.innerHTML = `
-      <input type="text" class="project-name-input" placeholder="Project Name">
-      <div class="project-form-btn-container">
-        <button class="add-project-btn">Add</button>
-        <button class="cancel-project-btn">Cancel</button>
-      </div>
+      <form>
+        <input type="text" class="project-name-input" placeholder="Project Name" required>
+        <div class="project-form-btn-container">
+          <button class="add-project-btn">Add</button>
+          <button class="cancel-project-btn">Cancel</button>
+        </div>
+      </form>
     `;
 
     container.querySelector('.add-project-btn').addEventListener('click', handleAddProject);
@@ -106,5 +108,26 @@ export default class View {
     if (projectContainer) {
       document.querySelector('.main-nav').removeChild(projectContainer);
     }
+  }
+
+  static renderProjects(projects) {
+    const container = document.querySelector('.custom-projects-section');
+    // Clear the container first to avoid duplication
+    container.innerHTML = '';
+    projects.forEach(project => {
+      const projectNode = document.createElement('div');
+      projectNode.classList.add('custom-project');
+      projectNode.innerHTML = `
+        <p class="project-name">${project.name}</p>
+        <img 
+          src="${x}" 
+          class="remove-project-btn"
+          data-name="${project.name}"
+        >
+      `;
+      container.appendChild(projectNode);
+
+      document.querySelector('.remove-project-btn').addEventListener('click', handleRemoveProject);
+    });
   }
 }

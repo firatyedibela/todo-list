@@ -12,7 +12,7 @@ document.querySelector('.new-project-btn').addEventListener('click', () => {
   View.renderProjectForm();
 });
 
-export function submitTask() {
+export function submitTask(e) {
   // Get data from task form
   const data = [];
   const inputs = document.querySelectorAll('.task-input');
@@ -28,6 +28,14 @@ export function handleAddProject() {
   // Get data from form and call addProject
   const data = document.querySelector('.project-name-input').value;
   Todo.addProject(data);
+  View.removeProjectForm();
+  View.renderProjects(Todo.projects);
+}
+
+export function handleRemoveProject(e) {
+  const projectName = e.target.dataset['name'];
+  Todo.removeProject(projectName);
+  View.renderProjects(Todo.projects);
 }
 
 
