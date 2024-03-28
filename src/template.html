@@ -1,43 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
-</head>
-<body>
-  <header class="main-header">
-    <div class="logo">
-      <img class="page-logo" src="<%=require('./images/list.svg')%>" alt="">
-      <p class="app-name">Todo List</p>
-    </div>
-    <button class="new-task-btn">
-      <img class="add-task-logo" src="<%=require('./images/plus.svg')%>" alt="">
-      <p class="new">New task</p>
-    </button>
-    <div class="date">1 January 2023</div>
-  </header>
-  <main class="main">
-    <nav class="main-nav">
-      <div class="default-projects-section">
-        <button class="default-project-btn">All tasks</button>
-        <button class="default-project-btn">Today</button>
-        <button class="default-project-btn">This week</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="logo">
+        <img class="page-logo" src="<%=require('./images/list.svg')%>" alt="" />
+        <p class="app-name">Todo List</p>
       </div>
-      <p class="projects-header">Projects</p>
-      <div class="custom-projects-section">
-      </div>
-      <button class="new-project-btn">New Project</button>
-    </nav>
-    <div class="content">
-
-    </div>
-  </main>
-  <footer class="footer">
-    <a class="creator" href="https://github.com/firatyedibela" target="_blank" > 
-      <img class="github-logo" src="<%=require('./images/github.svg')%>" alt="">
-      @firatyedibela
-    </a>
-  </footer>
-</body>
+      <button class="new-task-btn">
+        <img
+          class="add-task-logo"
+          src="<%=require('./images/plus.svg')%>"
+          alt=""
+        />
+        <p class="new">New task</p>
+      </button>
+      <div class="date">1 January 2023</div>
+    </header>
+    <main class="main">
+      <nav class="main-nav">
+        <div class="default-projects-section">
+          <button class="default-project-btn all-tasks">All tasks</button>
+          <button class="default-project-btn todays-tasks">Today</button>
+          <button class="default-project-btn weeks-tasks">This week</button>
+        </div>
+        <p class="projects-header">Projects</p>
+        <div class="custom-projects-section"></div>
+        <button class="new-project-btn">New Project</button>
+      </nav>
+      <div class="content"></div>
+    </main>
+    <footer class="footer">
+      <a
+        class="creator"
+        href="https://github.com/firatyedibela"
+        target="_blank"
+      >
+        <img
+          class="github-logo"
+          src="<%=require('./images/github.svg')%>"
+          alt=""
+        />
+        @firatyedibela
+      </a>
+    </footer>
+  </body>
 </html>
