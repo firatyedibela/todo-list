@@ -1,5 +1,12 @@
-import { submitTask, handleAddProject, handleRemoveProject } from '../index.js';
+import {
+  submitTask,
+  handleAddProject,
+  handleRemoveProject,
+  toggleClass,
+} from '../index.js';
 import x from '../images/x.svg';
+import checkSvg from '../images/check.svg';
+import { format, differenceInDays, differenceInHours } from 'date-fns';
 
 export default class View {
   static renderTaskForm(projects) {
@@ -144,6 +151,20 @@ export default class View {
       const taskContainer = document.createElement('div');
       taskContainer.classList.add('task-container');
 
+      // Create check button
+      const checkBtnContainer = document.createElement('div');
+      checkBtnContainer.classList.add('check-btn-container');
+
+      const checkBtn = document.createElement('img');
+      checkBtn.classList.add('check-btn');
+      checkBtn.src = checkSvg;
+
+      checkBtnContainer.appendChild(checkBtn);
+
+      checkBtnContainer.addEventListener('click', () => {
+        toggleClass('checked', checkBtnContainer);
+      });
+
       // Create task elements for task properties
       const title = document.createElement('div');
       title.classList.add('task-title');
@@ -155,7 +176,14 @@ export default class View {
 
       const dueDate = document.createElement('div');
       dueDate.classList.add('task-due-date');
-      dueDate.textContent = task.dueDate;
+      const [year, month, day] = task.dueDate
+        .split('-')
+        .map((num) => parseInt(num));
+      const daysLeft = differenceInDays(
+        new Date(year, month - 1, day),
+        new Date()
+      );
+      dueDate.textContent = `${daysLeft} days left`;
 
       const priority = document.createElement('div');
       priority.classList.add('task-priority');
@@ -165,6 +193,7 @@ export default class View {
       project.classList.add('task-project');
       project.textContent = task.project;
 
+      taskContainer.appendChild(checkBtnContainer);
       taskContainer.appendChild(title);
       taskContainer.appendChild(description);
       taskContainer.appendChild(dueDate);

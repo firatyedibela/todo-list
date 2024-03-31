@@ -3,7 +3,16 @@ import { format, isSameWeek } from 'date-fns';
 const date = format(new Date(), 'yyyy-MM-dd');
 
 export default class Todo {
-  static list = [];
+  static list = [
+    {
+      title: 'Make Exercise',
+      description:
+        'Run at least 4 kilometers. Do stretching before the exercise and afterwards.',
+      dueDate: '2024-04-25',
+      priority: 'High',
+      project: 'none',
+    },
+  ];
   static projects = [];
 
   static addTodo(title, description, dueDate, priority, project) {
@@ -31,12 +40,9 @@ export default class Todo {
   static getWeeksTasks() {
     return this.list.filter((task) => {
       // Create a new date with due date's parsed values and compare it with today
-      console.log(task.dueDate);
       const [year, month, day] = task.dueDate
         .split('-')
         .map((num) => parseInt(num));
-      console.log(year, month, day);
-      console.log(new Date(year, month - 1, day));
       return isSameWeek(new Date(year, month - 1, day), new Date());
     });
   }
