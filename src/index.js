@@ -1,9 +1,11 @@
 import './styles/main.css';
-import Todo from './scripts/model.js';
-import View from './scripts/view.js';
+import Todo from './scripts/data.js';
+import View from './scripts/dom.js';
 import { format } from 'date-fns';
 
 const date = format(new Date(), 'yyyy-MM-dd');
+
+View.renderTasks(Todo.list);
 
 // Display all tasks
 document.querySelector('.all-tasks').addEventListener('click', () => {
@@ -54,4 +56,10 @@ export function handleRemoveProject(e) {
   const projectName = e.target.dataset['name'];
   Todo.removeProject(projectName);
   View.renderProjects(Todo.projects);
+}
+
+export function toggleClass(customClass, element) {
+  element.classList.contains(customClass)
+    ? element.classList.remove(customClass)
+    : element.classList.add(customClass);
 }
