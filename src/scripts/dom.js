@@ -2,6 +2,7 @@ import {
   submitTask,
   handleAddProject,
   handleRemoveProject,
+  renderCustomProjectTasks,
   toggleClass,
 } from '../index.js';
 import x from '../images/x.svg';
@@ -127,6 +128,7 @@ export default class View {
     projects.forEach((project) => {
       const projectNode = document.createElement('div');
       projectNode.classList.add('custom-project', 'project');
+      projectNode.dataset.name = project.name;
       projectNode.innerHTML = `
         <p class="project-name">${project.name}</p>
         <img 
@@ -136,10 +138,14 @@ export default class View {
         >
       `;
       container.appendChild(projectNode);
+    });
 
-      document
-        .querySelector('.remove-project-btn')
-        .addEventListener('click', handleRemoveProject);
+    document.querySelectorAll('.remove-project-btn').forEach((button) => {
+      button.addEventListener('click', handleRemoveProject);
+    });
+
+    document.querySelectorAll('.custom-project').forEach((project) => {
+      project.addEventListener('click', renderCustomProjectTasks);
     });
   }
 

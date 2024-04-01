@@ -21,7 +21,9 @@ export default class Todo {
     },
   ];
   static projects = [
-    { name: 'Learn To Code' },
+    {
+      name: 'Learn To Code',
+    },
     {
       name: 'Finish the home',
     },
@@ -57,5 +59,9 @@ export default class Todo {
         .map((num) => parseInt(num));
       return isSameWeek(new Date(year, month - 1, day), new Date());
     });
+  }
+
+  static getCustomProjectsTasks(projectName) {
+    return this.list.filter((task) => task.project === projectName);
   }
 }

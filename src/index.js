@@ -71,6 +71,11 @@ export function handleRemoveProject(e) {
   View.renderProjects(Todo.projects);
 }
 
+export function renderCustomProjectTasks(e) {
+  const projectName = e.target.dataset['name'];
+  View.renderTasks(Todo.getCustomProjectsTasks(projectName));
+}
+
 export function toggleClass(customClass, element) {
   element.classList.contains(customClass)
     ? element.classList.remove(customClass)
