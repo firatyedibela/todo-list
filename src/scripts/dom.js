@@ -126,25 +126,29 @@ export default class View {
     // Clear the container first to avoid duplication
     container.innerHTML = '';
     projects.forEach((project) => {
-      const projectNode = document.createElement('div');
-      projectNode.classList.add('custom-project', 'project');
-      projectNode.dataset.name = project.name;
-      projectNode.innerHTML = `
-        <p class="project-name">${project.name}</p>
-        <img 
-          src="${x}" 
-          class="remove-project-btn"
-          data-name="${project.name}"
-        >
-      `;
-      container.appendChild(projectNode);
+      const customProjectContainer = document.createElement('div');
+      customProjectContainer.classList.add('custom-project', 'project');
+
+      const projectNameSection = document.createElement('div');
+      projectNameSection.classList.add('project-name-section');
+      projectNameSection.textContent = project.name;
+      projectNameSection.dataset.name = project.name;
+      customProjectContainer.appendChild(projectNameSection);
+
+      const removeProjectBtn = document.createElement('img');
+      removeProjectBtn.classList.add('remove-project-btn');
+      removeProjectBtn.dataset.name = project.name;
+      removeProjectBtn.src = x;
+      customProjectContainer.appendChild(removeProjectBtn);
+
+      container.appendChild(customProjectContainer);
     });
 
     document.querySelectorAll('.remove-project-btn').forEach((button) => {
       button.addEventListener('click', handleRemoveProject);
     });
 
-    document.querySelectorAll('.custom-project').forEach((project) => {
+    document.querySelectorAll('.project-name-section').forEach((project) => {
       project.addEventListener('click', renderCustomProjectTasks);
     });
   }
