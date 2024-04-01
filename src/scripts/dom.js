@@ -126,7 +126,7 @@ export default class View {
     container.innerHTML = '';
     projects.forEach((project) => {
       const projectNode = document.createElement('div');
-      projectNode.classList.add('custom-project');
+      projectNode.classList.add('custom-project', 'project');
       projectNode.innerHTML = `
         <p class="project-name">${project.name}</p>
         <img 
@@ -168,7 +168,10 @@ export default class View {
       // Create task elements for task properties
       const title = document.createElement('div');
       title.classList.add('task-title');
-      title.textContent = task.title;
+      title.textContent =
+        task.project !== 'none'
+          ? `${task.title} (${task.project})`
+          : `${task.title}`;
 
       const description = document.createElement('div');
       description.classList.add('task-description');
@@ -189,16 +192,11 @@ export default class View {
       priority.classList.add('task-priority');
       priority.textContent = task.priority;
 
-      const project = document.createElement('div');
-      project.classList.add('task-project');
-      project.textContent = task.project;
-
       taskContainer.appendChild(checkBtnContainer);
       taskContainer.appendChild(title);
       taskContainer.appendChild(description);
       taskContainer.appendChild(dueDate);
       taskContainer.appendChild(priority);
-      taskContainer.appendChild(project);
 
       container.appendChild(taskContainer);
     });

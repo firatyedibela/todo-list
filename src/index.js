@@ -7,6 +7,18 @@ const date = format(new Date(), 'yyyy-MM-dd');
 
 View.renderTasks(Todo.list);
 
+// Active page decoration
+const allProjects = document.querySelectorAll('.default-project-btn');
+allProjects.forEach((project) => {
+  project.addEventListener('click', (e) => {
+    // Once a project is clicked remove every project's active class and add active class to the clicked one
+    allProjects.forEach((project) => {
+      project.classList.remove('active');
+    });
+    e.target.classList.add('active');
+  });
+});
+
 // Display all tasks
 document.querySelector('.all-tasks').addEventListener('click', () => {
   View.renderTasks(Todo.list);
