@@ -43,6 +43,7 @@ export function submitTask(e) {
   });
   // Pass that data to addTodo function of Todo,
   Todo.addTodo(...data);
+  updateCurrentContent();
 }
 
 export function handleAddProject() {
@@ -68,4 +69,24 @@ export function toggleClass(customClass, element) {
   element.classList.contains(customClass)
     ? element.classList.remove(customClass)
     : element.classList.add(customClass);
+}
+
+function updateCurrentContent() {
+  // Find the current content first
+  const allProjects = Array.from(document.querySelectorAll('.project'));
+  const activeProject = allProjects.find((project) =>
+    project.classList.contains('active')
+  );
+
+  // Update the content based on the active project's name
+  const projectName = activeProject.dataset['name'];
+  if (projectName === 'all-tasks') {
+    View.renderTasks(Todo.list);
+  } else if (projectName === 'todays-tasks') {
+    View.renderTasks(Todo.getTodaysTasks());
+  } else if (projectName === 'weeks-tasks') {
+    View.renderTasks(Todo.getWeeksTasks());
+  } else {
+    View.renderTasks(Todo.getCustomProjectsTasks(projectName));
+  }
 }
