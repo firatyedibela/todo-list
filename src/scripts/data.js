@@ -9,11 +9,23 @@ export default class Todo {
       description:
         'Run at least 4 kilometers. Do stretching before the exercise and afterwards.',
       dueDate: '2024-04-25',
-      priority: 'High',
+      priority: 'normal',
       project: 'none',
     },
+    {
+      title: 'Code Page Layout',
+      description: 'Create page layout and code it with basic html and css.',
+      dueDate: '2024-04-1',
+      priority: 'high',
+      project: 'Create a WebPage',
+    },
   ];
-  static projects = [];
+  static projects = [
+    { name: 'Learn To Code' },
+    {
+      name: 'Finish the home',
+    },
+  ];
 
   static addTodo(title, description, dueDate, priority, project) {
     Todo.list.push({ title, description, dueDate, priority, project });

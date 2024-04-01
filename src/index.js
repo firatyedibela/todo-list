@@ -5,7 +5,9 @@ import { format } from 'date-fns';
 
 const date = format(new Date(), 'yyyy-MM-dd');
 
+// Render all tasks and custom projects at page load
 View.renderTasks(Todo.list);
+View.renderProjects(Todo.projects);
 
 // Active page decoration
 const allProjects = document.querySelectorAll('.default-project-btn');
@@ -53,7 +55,6 @@ export function submitTask(e) {
   });
   // Pass that data to addTodo function of Todo,
   Todo.addTodo(...data);
-  console.table(Todo.list);
 }
 
 export function handleAddProject() {
