@@ -130,8 +130,8 @@ export default class View {
       customProjectContainer.classList.add('custom-project', 'project');
 
       const projectNameSection = document.createElement('div');
-      projectNameSection.classList.add('project-name-section');
-      projectNameSection.textContent = project.name;
+      projectNameSection.classList.add('project-name-section', 'project');
+      projectNameSection.textContent = `${project.name}`;
       projectNameSection.dataset.name = project.name;
       customProjectContainer.appendChild(projectNameSection);
 
@@ -150,6 +150,18 @@ export default class View {
 
     document.querySelectorAll('.project-name-section').forEach((project) => {
       project.addEventListener('click', renderCustomProjectTasks);
+    });
+
+    // Active page's nav decoration
+    const allProjects = document.querySelectorAll('.project');
+    allProjects.forEach((project) => {
+      project.addEventListener('click', (e) => {
+        // Once a project is clicked remove every project's active class and add active class to the clicked one
+        allProjects.forEach((project) => {
+          project.classList.remove('active');
+        });
+        e.target.classList.add('active');
+      });
     });
   }
 
