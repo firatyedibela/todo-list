@@ -1,6 +1,6 @@
 import './styles/main.css';
 import Todo from './scripts/data.js';
-import View from './scripts/dom.js';
+import View from './scripts/view.js';
 import { format } from 'date-fns';
 
 const date = format(new Date(), 'yyyy-MM-dd');
@@ -58,6 +58,12 @@ export function handleRemoveProject(e) {
   const projectName = e.target.dataset['name'];
   Todo.removeProject(projectName);
   View.renderProjects(Todo.projects);
+}
+
+export function handleRemoveTask(e) {
+  const taskName = e.target.dataset['name'];
+  Todo.removeTodo(taskName);
+  updateCurrentContent();
 }
 
 export function renderCustomProjectTasks(e) {
