@@ -19,6 +19,13 @@ export default class Todo {
       priority: 'high',
       project: 'Create a WebPage',
     },
+    {
+      title: 'Clean the Home',
+      description: 'Clean big room and kitchen, also the windows.',
+      dueDate: '2024-04-2',
+      priority: 'low',
+      project: 'none',
+    },
   ];
   static projects = [
     {
