@@ -19,18 +19,43 @@ export default class View {
     const formContainer = document.createElement('div');
     formContainer.classList.add('form-container');
     formContainer.innerHTML = `
-      <form class="task-form" action="">
+      <form novalidate class="task-form" action="">
         <div>
-          <label for="title">Title</label>
-          <input class="task-input" type="text" name="title" id="title" required>
+          <label for="title">Title*</label>
+          <div class="input-container">
+            <input 
+              minlength=3
+              maxlength=20 
+              class="task-input" 
+              type="text" 
+              name="title" 
+              id="title" 
+              required>
+            <span class="title-error input-error hidden"></span>
+          </div>         
         </div>
         <div>
           <label for="description">Description</label>
-          <input class="task-input" type="text" name="description" id="description" required>
+          <textarea
+            maxlength=50
+            class="task-input" 
+            type="text" 
+            name="description" 
+            id="description" 
+            rows="20"></textarea>
         </div>
         <div>
-          <label for="dueDate">Due Date</label>
-          <input class="task-input" type="date" name="dueDate" id="dueDate" required>
+          <label for="dueDate">Due Date*</label>
+          <div class="input-container">
+            <input
+            min="${format(new Date(), 'yyyy-MM-dd')}" 
+            class="task-input" 
+            type="date" 
+            name="dueDate" 
+            id="dueDate" 
+            required>
+            <span class="date-error input-error hidden"></span>
+          </div>          
         </div>
         <div>
           <label for="priority">Priority</label>
@@ -47,18 +72,60 @@ export default class View {
           </select>
         </div>
         
-        <button class="submit-new-task-btn">Add</button>
-        <button class="cancel-task-button">Cancel</button>
+        <div class="form-buttons-container">
+          <button type="submit" class="submit-new-task-btn">Add</button>
+          <button class="cancel-task-button">Cancel</button>
+        </div>
       </form>
     `;
 
-    // Add event listeners to form buttons
-    formContainer
-      .querySelector('.submit-new-task-btn')
-      .addEventListener('click', (e) => {
+    const taskForm = formContainer.querySelector('.task-form');
+    const titleInput = formContainer.querySelector('#title');
+    const titleError = formContainer.querySelector('.title-error');
+    const dateInput = formContainer.querySelector('#dueDate');
+    const dateError = formContainer.querySelector('.date-error');
+
+    // TITLE Form validation while user typing
+    titleInput.addEventListener('input', () => {
+      if (titleInput.validity.valid) {
+        titleError.className = 'title-error input-error hidden';
+        // This is for resetting border radius style and adding valid style
+        titleInput.className = 'task-input valid';
+      } else {
+        titleError.textContent = `Title should be at least ${titleInput.minLength} characters.`;
+        titleError.className = 'input-error active';
+        titleInput.className = 'task-input failed';
+      }
+    });
+
+    // No need to check if date is valid because only valid dates are available to user
+    dateInput.addEventListener('input', () => {
+      dateError.className = 'date-error input-error hidden';
+      // This is for resetting border radius style and adding valid style
+      dateInput.className = 'task-input valid';
+    });
+
+    // TITLE And DATE Form validation while user submitting
+    taskForm.addEventListener('submit', (event) => {
+      if (!titleInput.validity.valid) {
+        event.preventDefault();
+        titleError.textContent = `Title should be at least ${titleInput.minLength} characters.`;
+        titleError.className = 'input-error active';
+        // This is for styling border-radius
+        titleInput.className = 'task-input failed';
+      } else if (!dateInput.validity.valid) {
+        event.preventDefault();
+        dateError.textContent = 'You should enter a due date.';
+        dateError.className = 'input-error active';
+        // This is for styling border-radius
+        dateInput.className = 'task-input failed';
+      } else {
+        // Submit task and prevent page from being reloaded, then remove form from page
         submitTask();
+        event.preventDefault();
         View.removeTaskForm();
-      });
+      }
+    });
 
     formContainer
       .querySelector('.cancel-task-button')
