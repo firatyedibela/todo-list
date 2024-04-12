@@ -42,7 +42,7 @@ export default class View {
             type="text" 
             name="description" 
             id="description" 
-            rows="20"></textarea>
+            ></textarea>
         </div>
         <div>
           <label for="dueDate">Due Date*</label>
@@ -168,18 +168,46 @@ export default class View {
     const container = document.createElement('div');
     container.classList.add('project-form-container');
     container.innerHTML = `
-      <form>
-        <input type="text" class="project-name-input" placeholder="Project Name" required>
+      <form novalidate class="project-form">
+        <input 
+          type="text" 
+          class="project-name-input" 
+          placeholder="Project Name"
+          minlength="3" 
+          maxlength="20"
+          required
+        >
         <div class="project-form-btn-container">
-          <button class="add-project-btn">Add</button>
+          <button type="submit" class="add-project-btn">Add</button>
           <button class="cancel-project-btn">Cancel</button>
         </div>
       </form>
     `;
 
-    container
-      .querySelector('.add-project-btn')
-      .addEventListener('click', handleAddProject);
+    const projectName = container.querySelector('.project-name-input');
+
+    // Avoid displaying error msg as the input becomes valid
+    projectName.addEventListener('input', (e) => {
+      projectName.setCustomValidity('');
+      if (!projectName.validity.valid) {
+        projectName.setCustomValidity(
+          'Project Name needs to be atleast 3 characters long.'
+        );
+      }
+    });
+    // Validation when submitting
+    container.querySelector('.project-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!projectName.validity.valid) {
+        projectName.setCustomValidity(
+          'Project Name needs to be atleast 3 characters long.'
+        );
+        projectName.reportValidity();
+      } else {
+        handleAddProject();
+      }
+    });
+
     container
       .querySelector('.cancel-project-btn')
       .addEventListener('click', () => {
