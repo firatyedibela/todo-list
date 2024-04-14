@@ -1,14 +1,17 @@
 import {
   submitTask,
+  submitEditTask,
   handleAddProject,
   handleRemoveProject,
   handleRemoveTask,
+  toggleEditTaskForm,
   renderCustomProjectTasks,
   toggleClass,
 } from '../index.js';
 import x from '../images/x.svg';
 import checkSvg from '../images/check.svg';
 import deleteSvg from '../images/delete.svg';
+import editSvg from '../images/edit.svg';
 import { format, differenceInDays, differenceInHours } from 'date-fns';
 
 export default class View {
@@ -23,7 +26,7 @@ export default class View {
         <div>
           <label for="title">Title*</label>
           <div class="input-container">
-            <input 
+            <input
               minlength=3
               maxlength=20 
               class="task-input" 
@@ -37,12 +40,12 @@ export default class View {
         <div>
           <label for="description">Description</label>
           <textarea
-            maxlength=50
+            maxlength=60
             class="task-input" 
             type="text" 
             name="description" 
             id="description" 
-            ></textarea>
+          ></textarea>
         </div>
         <div>
           <label for="dueDate">Due Date*</label>
@@ -268,17 +271,132 @@ export default class View {
     });
   }
 
-  static renderTasks(taskList) {
+  static renderTasks(taskList, projects) {
     const container = document.querySelector('.content');
     container.textContent = '';
+
     taskList.forEach((task) => {
-      // Create container for tasks
+      // Create outer container that will contain both the task data section
+      // and edit task form section
       const taskContainer = document.createElement('div');
-      taskContainer.classList.add('task-container');
+      taskContainer.className = 'task-container';
+
+      // Create data container and edit form container for tasks
+      const taskDataContainer = document.createElement('div');
+      taskDataContainer.classList.add('task-data-container');
+
+      // Create edit button and make interactive
+      const editBtn = document.createElement('img');
+      editBtn.className = 'edit-task-btn task-btn';
+      editBtn.src = editSvg;
+      editBtn.dataset.name = task.title;
+
+      editBtn.addEventListener('click', toggleEditTaskForm);
+
+      // EDIT HTML
+      const taskEditFormContainer = document.createElement('div');
+      taskEditFormContainer.className = `task-edit-form-container`;
+      taskEditFormContainer.id = task.title;
+      taskEditFormContainer.innerHTML = `
+        <form novalidate class="edit-task-form">
+          <input 
+            type="text"
+            id="edit-title"
+            class="edit-task-input"
+            value="${task.title}"
+            minlength=3
+            maxlength=20
+            autocomplete="off"
+            required
+          >
+          <textarea
+            type="text"
+            id="edit-description"
+            class="edit-task-input"
+            maxlength=60
+          >${task.description}</textarea>
+          <input
+            type="date"
+            id="edit-date"
+            class="edit-task-input"
+            min="${format(new Date(), 'yyyy-MM-dd')}"
+            value="${task.dueDate}"
+            required
+          >
+          <select 
+            class="edit-task-input" 
+            id="edit-priority" 
+            value="${task.priority}"
+          >
+            <option class="priority-opt" value="low">Low</option>
+            <option class="priority-opt" value="normal">Normal</option>
+            <option class="priority-opt" value="high">High</option>
+          </select>
+          <select 
+            class="edit-task-input" 
+            id="edit-project"
+          >
+            <option value="none" selected>Select a project
+            </option>
+          </select>
+          <button type="submit">Save</button>
+        </form>
+      `;
+
+      // Make current priority selected
+      const currentPriority = task.priority;
+      const priorityOptions =
+        taskEditFormContainer.querySelectorAll('.priority-opt');
+      priorityOptions.forEach((option) => {
+        if (option.value === currentPriority) {
+          option.selected = true;
+        }
+      });
+
+      // Render the projects and make current one selected if it is not none
+      const projectsContainer =
+        taskEditFormContainer.querySelector('#edit-project');
+      projects.forEach((project) => {
+        const option = document.createElement('option');
+        option.value = project.name;
+        option.textContent = project.name;
+        // Make the option selected if it is current task's project
+        if (project.name === task.project) {
+          option.selected = true;
+        }
+        projectsContainer.appendChild(option);
+      });
+
+      // Validate edit form and submit
+      const editForm = taskEditFormContainer.querySelector('form');
+      editForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (!editForm.checkValidity()) {
+          editForm.reportValidity();
+        } else {
+          // Get data from edit task form
+          const newData = [];
+          const inputs =
+            taskEditFormContainer.querySelectorAll('.edit-task-input');
+          inputs.forEach((input) => {
+            newData.push(input.value);
+          });
+          submitEditTask(task.title, newData);
+        }
+      });
+
+      // Create X button for closing edit-task-form and add it to
+      // edit task form container
+      const closeEditFormBtn = document.createElement('img');
+      closeEditFormBtn.className = 'close-edit-form-btn';
+      closeEditFormBtn.src = x;
+      closeEditFormBtn.dataset.name = task.title;
+      closeEditFormBtn.addEventListener('click', toggleEditTaskForm);
+      taskEditFormContainer.appendChild(closeEditFormBtn);
 
       // Create check button and make interactive
       const checkBtn = document.createElement('img');
-      checkBtn.classList.add('check-btn');
+      checkBtn.className = 'check-task-btn task-btn';
       checkBtn.src = checkSvg;
       checkBtn.dataset.name = task.title;
 
@@ -288,7 +406,7 @@ export default class View {
 
       // Create remove button and make interactive
       const removeBtn = document.createElement('img');
-      removeBtn.classList.add('remove-task-btn');
+      removeBtn.className = 'remove-task-btn task-btn';
       removeBtn.src = deleteSvg;
       removeBtn.dataset.name = task.title;
 
@@ -308,6 +426,7 @@ export default class View {
 
       const dueDate = document.createElement('div');
       dueDate.classList.add('task-due-date');
+      console.log(task.dueDate);
       const [year, month, day] = task.dueDate
         .split('-')
         .map((num) => parseInt(num));
@@ -321,14 +440,17 @@ export default class View {
       dueDate.textContent = `${daysLeft} days left`;
 
       // Add a class to container based on priority
-      taskContainer.classList.add(task.priority);
+      taskDataContainer.classList.add(task.priority);
 
-      taskContainer.appendChild(checkBtn);
-      taskContainer.appendChild(removeBtn);
-      taskContainer.appendChild(title);
-      taskContainer.appendChild(description);
-      taskContainer.appendChild(dueDate);
+      taskDataContainer.appendChild(checkBtn);
+      taskDataContainer.appendChild(removeBtn);
+      taskDataContainer.appendChild(title);
+      taskDataContainer.appendChild(description);
+      taskDataContainer.appendChild(dueDate);
+      taskDataContainer.appendChild(editBtn);
 
+      taskContainer.appendChild(taskDataContainer);
+      taskContainer.appendChild(taskEditFormContainer);
       container.appendChild(taskContainer);
     });
   }

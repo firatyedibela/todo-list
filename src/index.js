@@ -6,22 +6,25 @@ import { format } from 'date-fns';
 const date = format(new Date(), 'yyyy-MM-dd');
 
 // Render all tasks and custom projects at page load
-View.renderTasks(Todo.list);
+View.renderTasks(Todo.list, Todo.projects);
 View.renderProjects(Todo.projects);
+
+// Render date
+document.querySelector('.date').textContent = format(new Date(), 'PPPP');
 
 // Display all tasks
 document.querySelector('.all-tasks').addEventListener('click', () => {
-  View.renderTasks(Todo.list);
+  View.renderTasks(Todo.list, Todo.projects);
 });
 
 // Display today's tasks
 document.querySelector('.todays-tasks').addEventListener('click', () => {
-  View.renderTasks(Todo.getTodaysTasks());
+  View.renderTasks(Todo.getTodaysTasks(), Todo.projects);
 });
 
 // Display this week's tasks
 document.querySelector('.weeks-tasks').addEventListener('click', () => {
-  View.renderTasks(Todo.getWeeksTasks());
+  View.renderTasks(Todo.getWeeksTasks(), Todo.projects);
 });
 
 // Create new task
@@ -34,7 +37,7 @@ document.querySelector('.new-project-btn').addEventListener('click', () => {
   View.renderProjectForm();
 });
 
-export function submitTask(e) {
+export function submitTask() {
   // Get data from task form
   const data = [];
   const inputs = document.querySelectorAll('.task-input');
@@ -46,12 +49,19 @@ export function submitTask(e) {
   updateCurrentContent();
 }
 
+export function submitEditTask(taskName, newData) {
+  console.log(newData);
+  Todo.editTodo(taskName, ...newData);
+  updateCurrentContent();
+}
+
 export function handleAddProject() {
   // Get data from form and call addProject
   const data = document.querySelector('.project-name-input').value;
   Todo.addProject(data);
   View.removeProjectForm();
   View.renderProjects(Todo.projects);
+  View.renderTasks(Todo.list, Todo.projects);
 }
 
 export function handleRemoveProject(e) {
@@ -66,9 +76,15 @@ export function handleRemoveTask(e) {
   updateCurrentContent();
 }
 
+export function toggleEditTaskForm(e) {
+  const containerName = e.target.dataset['name'];
+  const container = document.getElementById(containerName);
+  container.classList.toggle('visible');
+}
+
 export function renderCustomProjectTasks(e) {
   const projectName = e.target.dataset['name'];
-  View.renderTasks(Todo.getCustomProjectsTasks(projectName));
+  View.renderTasks(Todo.getCustomProjectsTasks(projectName), Todo.projects);
 }
 
 export function toggleClass(customClass, element) {
@@ -87,12 +103,12 @@ function updateCurrentContent() {
   // Update the content based on the active project's name
   const projectName = activeProject.dataset['name'];
   if (projectName === 'all-tasks') {
-    View.renderTasks(Todo.list);
+    View.renderTasks(Todo.list, Todo.projects);
   } else if (projectName === 'todays-tasks') {
-    View.renderTasks(Todo.getTodaysTasks());
+    View.renderTasks(Todo.getTodaysTasks(), Todo.projects);
   } else if (projectName === 'weeks-tasks') {
-    View.renderTasks(Todo.getWeeksTasks());
+    View.renderTasks(Todo.getWeeksTasks(), Todo.projects);
   } else {
-    View.renderTasks(Todo.getCustomProjectsTasks(projectName));
+    View.renderTasks(Todo.getCustomProjectsTasks(projectName), Todo.projects);
   }
 }

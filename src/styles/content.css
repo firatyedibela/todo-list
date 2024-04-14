@@ -1,0 +1,146 @@
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 20px;
+  align-items: center;
+  overflow: auto;
+}
+
+.task-data-container {
+  font-family: lato;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.2rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  border-radius: 5px;
+  padding: 20px;
+  transition: background-color 200ms;
+}
+
+.task-btn {
+  height: 40px;
+  cursor: pointer;
+  transition: filter 100ms, scale 150ms;
+}
+
+.task-btn:hover {
+  filter: brightness(0%);
+  scale: 1.15;
+}
+
+.task-data-container.high {
+  background-color: rgb(246, 59, 59);
+}
+
+.task-data-container.normal {
+  background-color: rgb(254, 175, 27);
+}
+
+.task-data-container.low {
+  background-color: rgb(227, 227, 70);
+}
+
+.task-data-container:has(.checked) {
+  background-color: rgb(52, 255, 52);
+  text-decoration: line-through;
+}
+
+.task-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-shadow: 1px 1px 3px rgb(175, 175, 175);
+}
+
+.task-due-date {
+  margin-left: auto;
+}
+
+.task-container {
+  height: max-content;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.task-edit-form-container {
+  background-color: #815fe6;
+  display: none;
+  margin-left: auto;
+  padding: 1rem 2rem;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border-radius: 4px;
+}
+
+.task-edit-form-container.visible {
+  display: block;
+}
+
+.edit-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-task-form > .edit-task-input {
+  font-size: 1rem;
+  padding-left: 6px;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  border: 2px solid white;
+  background-color: white;
+}
+
+.edit-task-form > .edit-task-input:focus {
+  border: 2px solid orange;
+  border-radius: 4px;
+}
+
+#edit-description {
+  resize: none;
+  height: 75px;
+}
+
+.priority-opt[value='low'] {
+  background-color: rgb(227, 227, 70);
+}
+
+.priority-opt[value='normal'] {
+  background-color: rgb(254, 175, 27);
+}
+
+.priority-opt[value='high'] {
+  background-color: rgb(246, 59, 59);
+}
+
+.edit-task-form > button[type='submit'] {
+  border: none;
+  width: 50%;
+  align-self: center;
+  border-radius: 500px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  margin-top: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  transition: scale 150ms;
+}
+
+.edit-task-form > button[type='submit']:hover {
+  scale: 1.1;
+}
+
+.close-edit-form-btn {
+  height: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}

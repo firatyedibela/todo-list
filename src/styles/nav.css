@@ -1,0 +1,177 @@
+.main-nav {
+  width: 230px;
+  background-color: #5d3ebc;
+  padding: 24px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.default-projects-section {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+  padding-left: 6px;
+}
+
+.default-projects-section {
+  border-bottom: 2px solid white;
+  padding-bottom: 20px;
+}
+
+.default-project-btn {
+  background-color: inherit;
+  border: none;
+  color: rgb(255, 209, 13);
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 2px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  width: 90%;
+}
+
+.default-project-btn:hover {
+  transform: scale(1.2);
+}
+
+.projects-header {
+  padding-left: 6px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-top: 20px;
+  color: rgb(255, 209, 13);
+  margin-bottom: 8px;
+}
+
+.custom-projects-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.new-project-btn {
+  border: none;
+  font-size: 1.2rem;
+  background-color: rgb(108, 215, 90);
+  width: 55%;
+  font-weight: bold;
+  padding: 6px 0px;
+  border-radius: 6px;
+  align-self: center;
+  cursor: pointer;
+  transition: transform 150ms, background-color 150ms;
+}
+
+.new-project-btn:hover {
+  transform: scale(1.1);
+  background-color: rgb(126, 249, 104);
+}
+
+.project-form-container {
+  margin-top: 18px;
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.project-name-input {
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  padding: 8px 8px;
+  border-radius: 6px;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+.project-name-input:focus {
+  border: 2px solid rgb(253, 198, 17);
+}
+
+.project-form-btn-container {
+  display: flex;
+  gap: 12px;
+}
+
+.project-form-btn-container button {
+  flex: 1;
+  font-size: 1.1rem;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  border: 1px solid white;
+  background-color: white;
+}
+
+.add-project-btn:hover {
+  border: 1px solid rgb(50, 233, 50);
+}
+
+.cancel-project-btn:hover {
+  border: 1px solid red;
+}
+
+.custom-project {
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 6px;
+  padding-left: 18px;
+  padding-right: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  box-sizing: border-box;
+  transition: background-color 150ms;
+}
+
+.project-name-section {
+  flex: 1;
+}
+
+.custom-project:hover {
+  background-color: #534285;
+}
+
+.custom-project:hover > img {
+  display: block;
+}
+
+.remove-project-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: none;
+  box-sizing: border-box;
+}
+
+.remove-project-btn:hover {
+  border: 2px solid gray;
+  border-radius: 6px;
+}
+
+.default-project-btn.active {
+  border: 1px solid rgb(255, 209, 13);
+  background-color: #534285;
+  transform: scale(1.2);
+}
+
+.custom-project:has(.project-name-section.active) {
+  background-color: #534285;
+  border: 1px solid rgb(255, 209, 13);
+}

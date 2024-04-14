@@ -15,15 +15,22 @@ export default class Todo {
     {
       title: 'Code Page Layout',
       description: 'Create page layout and code it with basic html and css.',
-      dueDate: '2024-04-1',
+      dueDate: '2024-04-12',
       priority: 'high',
       project: 'Create a WebPage',
     },
     {
       title: 'Clean the Home',
       description: 'Clean big room and kitchen, also the windows.',
-      dueDate: '2024-04-2',
+      dueDate: '2024-04-13',
       priority: 'low',
+      project: 'none',
+    },
+    {
+      title: 'Cook',
+      description: 'Cook pasta for the guests',
+      dueDate: '2024-04-13',
+      priority: 'high',
       project: 'none',
     },
   ];
@@ -34,6 +41,9 @@ export default class Todo {
     {
       name: 'Finish the home',
     },
+    {
+      name: 'Create a WebPage',
+    },
   ];
 
   static addTodo(title, description, dueDate, priority, project) {
@@ -43,6 +53,26 @@ export default class Todo {
   static removeTodo(title) {
     const idx = Todo.list.findIndex((todo) => todo.title === title);
     Todo.list.splice(idx, 1);
+  }
+
+  static editTodo(
+    title,
+    newTitle,
+    newDescription,
+    newDueDate,
+    newPriority,
+    newProject
+  ) {
+    // Find the todo index
+    const idx = Todo.list.findIndex((todo) => todo.title === title);
+    // Update it
+    Todo.list.splice(idx, 1, {
+      title: newTitle,
+      description: newDescription,
+      dueDate: newDueDate,
+      priority: newPriority,
+      project: newProject,
+    });
   }
 
   static addProject(name) {

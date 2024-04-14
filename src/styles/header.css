@@ -1,0 +1,57 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(76, 51, 152);
+  height: 75px;
+  padding: 0 32px;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.main-header > div,
+.main-header > button {
+  flex: 1;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+}
+
+.date {
+  text-align: right;
+}
+
+.page-logo {
+  width: 65px;
+  height: 65px;
+}
+
+.new-task-btn {
+  background-color: inherit;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.25s;
+  font-size: inherit;
+  font-weight: inherit;
+  color: white;
+}
+
+.add-task-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.new-task-btn:hover {
+  transform: scale(1.2);
+  text-shadow: 2px 2px 5px black;
+}
