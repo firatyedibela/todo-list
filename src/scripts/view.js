@@ -48,7 +48,7 @@ export default class View {
           ></textarea>
         </div>
         <div>
-          <label for="dueDate">Due Date*</label>
+          <label for="dueDate">Due Date</label>
           <div class="input-container">
             <input
             min="${format(new Date(), 'yyyy-MM-dd')}"
@@ -239,6 +239,7 @@ export default class View {
       projectNameSection.classList.add('project-name-section', 'project');
       projectNameSection.textContent = `${project.name}`;
       projectNameSection.dataset.name = project.name;
+      projectNameSection.dataset.customProject = true;
       customProjectContainer.appendChild(projectNameSection);
 
       const removeProjectBtn = document.createElement('img');
@@ -271,7 +272,8 @@ export default class View {
     });
   }
 
-  static renderTasks(taskList, projects) {
+  static renderTasks(taskList, projects, custom = false) {
+    console.log(custom);
     const container = document.querySelector('.content');
     container.textContent = '';
 
@@ -414,10 +416,16 @@ export default class View {
       // Create task elements for task properties
       const title = document.createElement('div');
       title.classList.add('task-title');
-      title.textContent =
-        task.project !== 'none'
-          ? `${task.title} (${task.project})`
-          : `${task.title}`;
+
+      // If rendering a custom project's tasks, do not provide project name
+      if (custom) {
+        title.textContent = task.title;
+      } else {
+        title.textContent =
+          task.project !== 'none'
+            ? `${task.title} (${task.project})`
+            : `${task.title}`;
+      }
 
       const description = document.createElement('div');
       description.classList.add('task-description');

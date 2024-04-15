@@ -83,8 +83,13 @@ export function toggleEditTaskForm(e) {
 }
 
 export function renderCustomProjectTasks(e) {
+  const custom = true;
   const projectName = e.target.dataset['name'];
-  View.renderTasks(Todo.getCustomProjectsTasks(projectName), Todo.projects);
+  View.renderTasks(
+    Todo.getCustomProjectsTasks(projectName),
+    Todo.projects,
+    custom
+  );
 }
 
 export function toggleClass(customClass, element) {
