@@ -55,8 +55,7 @@ export default class View {
             class="task-input" 
             type="date" 
             name="dueDate" 
-            id="dueDate" 
-            required>
+            id="dueDate" >
             <span class="date-error input-error hidden"></span>
           </div>          
         </div>
@@ -321,7 +320,6 @@ export default class View {
             class="edit-task-input"
             min="${format(new Date(), 'yyyy-MM-dd')}"
             value="${task.dueDate}"
-            required
           >
           <select 
             class="edit-task-input" 
@@ -426,18 +424,20 @@ export default class View {
 
       const dueDate = document.createElement('div');
       dueDate.classList.add('task-due-date');
-      console.log(task.dueDate);
-      const [year, month, day] = task.dueDate
-        .split('-')
-        .map((num) => parseInt(num));
-      let daysLeft = differenceInDays(
-        new Date(year, month - 1, day),
-        new Date()
-      );
-      if (daysLeft < 0) {
-        daysLeft = 0;
+
+      if (task.dueDate) {
+        const [year, month, day] = task.dueDate
+          .split('-')
+          .map((num) => parseInt(num));
+        let daysLeft = differenceInDays(
+          new Date(year, month - 1, day),
+          new Date()
+        );
+        if (daysLeft < 0) {
+          daysLeft = 0;
+        }
+        dueDate.textContent = `${daysLeft} days left`;
       }
-      dueDate.textContent = `${daysLeft} days left`;
 
       // Add a class to container based on priority
       taskDataContainer.classList.add(task.priority);
