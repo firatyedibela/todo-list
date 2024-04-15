@@ -3,6 +3,16 @@ import { format, isSameWeek } from 'date-fns';
 const date = format(new Date(), 'yyyy-MM-dd');
 
 export default class Todo {
+  static init() {
+    if (localStorage.getItem('todoList')) {
+      Todo.list = JSON.parse(localStorage.getItem('todoList'));
+    }
+
+    if (localStorage.getItem('projects')) {
+      Todo.projects = JSON.parse(localStorage.getItem('projects'));
+    }
+  }
+
   static list = [
     {
       title: 'Make Exercise',
@@ -48,11 +58,13 @@ export default class Todo {
 
   static addTodo(title, description, dueDate, priority, project) {
     Todo.list.push({ title, description, dueDate, priority, project });
+    updateTodoStorage();
   }
 
   static removeTodo(title) {
     const idx = Todo.list.findIndex((todo) => todo.title === title);
     Todo.list.splice(idx, 1);
+    updateTodoStorage();
   }
 
   static editTodo(
@@ -73,15 +85,18 @@ export default class Todo {
       priority: newPriority,
       project: newProject,
     });
+    updateTodoStorage();
   }
 
   static addProject(name) {
     Todo.projects.push({ name, tasks: [] });
+    updateProjectStorage();
   }
 
   static removeProject(name) {
     const idx = Todo.projects.findIndex((project) => project.name === name);
     Todo.projects.splice(idx, 1);
+    updateProjectStorage();
   }
 
   static getTodaysTasks() {
@@ -102,3 +117,13 @@ export default class Todo {
     return this.list.filter((task) => task.project === projectName);
   }
 }
+
+function updateTodoStorage() {
+  localStorage.setItem('todoList', JSON.stringify(Todo.list));
+}
+
+function updateProjectStorage() {
+  localStorage.setItem('projects', JSON.stringify(Todo.projects));
+}
+
+Todo.init();

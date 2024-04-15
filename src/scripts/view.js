@@ -51,7 +51,8 @@ export default class View {
           <label for="dueDate">Due Date*</label>
           <div class="input-container">
             <input
-            min="${format(new Date(), 'yyyy-MM-dd')}" 
+            min="${format(new Date(), 'yyyy-MM-dd')}"
+            value="${format(new Date(), 'yyyy-MM-dd')}" 
             class="task-input" 
             type="date" 
             name="dueDate" 
